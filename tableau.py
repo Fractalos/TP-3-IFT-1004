@@ -107,11 +107,13 @@ class Tableau():
 
     def initialiser_tableau(self):
         """
-        Initialise le tableau à son contenu initial en suivant les étapes suivantes:
-            1) On crée chacune des cases du tableau (cette étape est programmée pour vous).
-            2) On y ajoute ensuite les mines dans certaines cases qui sont choisies au hasard.
-            3) À chaque fois qu'on ajoute une mine dans une case, vous devriez incrémenter dans chacune des cases
-            voisines un attribut qui représentera le nombre de mines voisines pour ces cases.
+        Initialise le tableau à son contenu initial en suivant les étapes
+        suivantes:
+        1) On crée chacune des cases du tableau (cette étape est programmée
+           pour vous).
+        2) On y ajoute ensuite les mines dans certaines cases qui sont choisies au hasard (attention de ne pas choisir deux fois la même case!).
+        - À chaque fois qu'on ajoute une mine dans une case, on obtient la liste de ses voisins (pour se faire, utilisez la méthode obtenir_voisins)
+        - Pour chaque voisin, on appelle la méthode ajouter_une_mine_voisine de la case correspondante.
         """
         for rangee_x in range(1, self.dimension_rangee+1):
             for colonne_y in range(1, self.dimension_colonne+1):
