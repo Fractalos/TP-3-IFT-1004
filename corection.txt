@@ -1,8 +1,8 @@
 ﻿
 Prénom et Nom : Charlotte Lavoie-Bel
 Numéro de dossier (NI) : 536 759 492
-Prénom et Nom : 
-Numéro de dossier (NI) :
+Prénom et Nom : Jean-Dominique Doyon
+Numéro de dossier (NI) : 111 020 045
 
 
 Fonctionnalités
