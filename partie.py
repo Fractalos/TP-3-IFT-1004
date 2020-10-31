@@ -42,7 +42,8 @@ class Partie():
         ### TODO: Modifier le code pour demander à l'utilisateur de choisir la taille
         ### du tableau (nombre de lignes et nombres de colonnes, ainsi que le nombre 
         ### de mines)     
-        
+
+
         self.tableau_mines = Tableau()
         
         compteur_tours = 0
