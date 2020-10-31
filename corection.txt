@@ -6,7 +6,7 @@ Numéro de dossier (NI) : 111 020 045
 
 
 Fonctionnalités
----------------
+----------------
 
 /15 : Le programme initialise correctement le tableau de mines.
       Commentaires :
