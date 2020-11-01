@@ -103,6 +103,21 @@ class Tableau():
 
         # TODO: Générer la liste des coordonnées valides des cases voisine. Le tuple voisinage est là pour vous aider.
 
+        # Je pense que le code des lignes 114-118 fonctionne, mais je ne sais pas si la validation est correcte.
+
+        # case = self.obtenir_case() # valide si la case est dans les dimensions du tableau
+
+        # case_du_voisinage = ()
+
+        # if self.liste_coordonnees_cases_voisines(case): # valide si la case n'a pas déjà été dévoilée
+
+        #     for voisin in voisinage :
+        #         x, y  = case[0] + voisin[0], case[1] + voisin[1]
+        #         case_du_voisinage = (x,) + (y,)
+        #         if self.valider_coordonnees_a_devoiler(case_du_voisinage):       # la case est-elle dans les dimensions du
+        #             liste_coordonnees_cases_voisines.append(case_du_voisinage)   # tableau et a
+
+
         return liste_coordonnees_cases_voisines
 
     def initialiser_tableau(self):
@@ -123,6 +138,10 @@ class Tableau():
         # TODO: À compléter (étapes 2 et 3)
         # Nous vous suggérons d'utiliser dans la fonction randint(a,b) du module random qui 
         # retourne un entier aléatoire compris entre a et b inclusivement.
+        
+        # 2) pour ajouter une mine à la case, faut-il faire Case.ajouter_mine ?
+        # for case in liste_coordonnees_cases_voisines :
+        #   Case.ajouter_une_mine_voisine ? # Je ne suis pas sûre que c'est adéquat
     
     def valider_coordonnees_a_devoiler(self, rangee_x, colonne_y):
         """
@@ -199,6 +218,10 @@ class Tableau():
 
         """
         # TODO: À compléter
+        # Si la case à dévoiler n'est pas dans le dictionnaire de case, alors 
+        # contient_cases_a_devoiler est True ? 
+        # J'ai l'impression qu'on n'a pas à s'en servir dans tableau.py, mais
+        # plutôt dans partie.py, plus précisément dans tour(self) ?
         pass
 
     def devoiler_case(self, rangee_x, colonne_y):
@@ -212,6 +235,12 @@ class Tableau():
             colonne_y (int): Numéro de la colonne de la case à dévoiler
         """
         # TODO: À compléter   
+        
+        
+        # if not contient_mine :
+        #   self.nombre_cases_sans_mine_a_devoiler -= 1 ?
+        # if not est_voisine_d_une_mine:
+        #   return obtenir_voisins
         pass        
         
     def contient_mine(self, rangee_x, colonne_y):
@@ -225,7 +254,10 @@ class Tableau():
         Returns:
             bool: True si la case à ces coordonnées (x, y) contient une mine, False autrement.
         """
-        # TODO: À compléter   
+        # TODO: À compléter 
+        
+        # Faut-il aller chercher les clés du dictionnaire_cases dans
+        # initialiser_tableau pour les tester avec Case.est_minee (attribut de Case())?
         pass
 
 

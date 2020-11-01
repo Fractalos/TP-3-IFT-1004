@@ -4,7 +4,7 @@ Module contenant la description de la classe Partie qui permet de jouer une part
 Dois être démarré en appelant la méthode jouer(). Cette classe contient les informations sur une partie et
 utilise un objet tableau_mines (une instance de la classe Tableau).
 
-Auteurs: à compléter
+Auteurs: Charlotte Lavoie-Bel et 
 """
 
 from tableau import Tableau
@@ -42,7 +42,16 @@ class Partie():
         ### TODO: Modifier le code pour demander à l'utilisateur de choisir la taille
         ### du tableau (nombre de lignes et nombres de colonnes, ainsi que le nombre 
         ### de mines)     
-
+        
+        # Il est mentionné dans les consignes de commencer à tester le jeu avec les
+        # valeurs par défaut. Cependant, suffirait-il de procéder comme suit ? 
+        
+        # print('*** Options du jeu ***')
+        # dimension_rangee = int(input('Entrez le nombre de lignes : '))
+        # dimension_colonne = int(input('Entrez le nombre de colonnes : '))
+        # nombre_mines = int(input('Entrez le nombre de mines : '))
+        # self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines))
+        # peut-être pourrait-on directement mettre les inputs dans Tableau.
 
         self.tableau_mines = Tableau()
         
@@ -55,7 +64,20 @@ class Partie():
             
         self.tableau_mines.afficher_solution()
         
-        # TODO: Afficher le message de victoire ou de défaite
+        ### TODO: Afficher le message de victoire ou de défaite
+        
+        # peut-être faire une condition du genre : 
+        #
+        # if self.tableau_mines.contient_case_a_devoiler(): 
+        #   print('Défaite!')
+        # else :
+        #   print('Victoire!') 
+        #
+        # return self.tableau_mines.afficher_solution()
+        #
+        # Il faudra faire attenton au return, pour ne pas que la méthode recrache 
+        # None avec le message de victoire ou de défaite. On doit de toutes 
+        # façon retourner le tableau solution
                
     def tour(self):
         """ 
@@ -70,6 +92,17 @@ class Partie():
               auquel cas affecte True à l'attribut self.partie_terminee.
         """
         # TODO: À programmer.
+        
+        # On demande les coordonnées d'une case à dévoiler avec
+        # demander_coordonnees_case_a_devoiler(self) ?
+        
+        # On dévoile la case avec devoiler_case() de tableau.py ?
+        
+        # On détecte si une mine a été actionnée avec contient_mine() de tableau.py ?
+        
+        # On créer une condition du genre :
+        # if self.tableau_mines.contient_mine() or not self.tableau_mines.contient_cases_a_devoiler() :
+        #   self.partie_terminee = True
         pass
         
     def valider_coordonnees(self, rangee_x, colonne_y):
@@ -89,6 +122,9 @@ class Partie():
             bool : True si les coordonnées sont valides, False autrement.
         """
         # TODO: À programmer.
+        
+        # 1) utiliser .isnumeric() ?
+        # 2) et 3) utiliser valider_coordonnees_a_devoiler ?
         pass
     
     def demander_coordonnees_case_a_devoiler(self):
