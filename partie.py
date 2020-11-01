@@ -4,7 +4,7 @@ Module contenant la description de la classe Partie qui permet de jouer une part
 Dois être démarré en appelant la méthode jouer(). Cette classe contient les informations sur une partie et
 utilise un objet tableau_mines (une instance de la classe Tableau).
 
-Auteurs: Charlotte Lavoie-Bel et 
+Auteurs: Charlotte Lavoie-Bel et Jean-Dominique Doyon
 """
 
 from tableau import Tableau
@@ -43,15 +43,22 @@ class Partie():
         ### du tableau (nombre de lignes et nombres de colonnes, ainsi que le nombre 
         ### de mines)     
         
-        # Il est mentionné dans les consignes de commencer à tester le jeu avec les
-        # valeurs par défaut. Cependant, suffirait-il de procéder comme suit ? 
-        
+        ## Il est mentionné dans les consignes de commencer à tester le jeu avec les
+        ## valeurs par défaut. Cependant, suffirait-il de procéder comme suit ?
+        ## JD Les valeurs par défauts sont déjà "hard codé" dans la fonction d'initialisation de Tableau.
+        ## Selon-moi on peut y aller avec ce que tu suggères.
+
         # print('*** Options du jeu ***')
         # dimension_rangee = int(input('Entrez le nombre de lignes : '))
         # dimension_colonne = int(input('Entrez le nombre de colonnes : '))
         # nombre_mines = int(input('Entrez le nombre de mines : '))
         # self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines))
         # peut-être pourrait-on directement mettre les inputs dans Tableau.
+        #
+        ## JD: je crois qu'on doit laisser les inputs dans la fonction jouer comme tu l'as fait. Dans tableau ces
+        ## variables sont dans les attributs de la classe. Je n'ai pas fini mon analyse, mais si la fonction
+        ## Tableau est appelée d'un autre endroit dans le programme on ne voudra peut-être pas poser la question
+        ## à l'utilisateur.
 
         self.tableau_mines = Tableau()
         
@@ -63,7 +70,10 @@ class Partie():
             self.tour()
             
         self.tableau_mines.afficher_solution()
-        
+
+        ## JD Quand on sort de cette boucle c'est que la partie est terminée donc est-ce qu'on
+        ## doit utilsier le return ou tout simplement afficher victoire ou défaite?
+
         ### TODO: Afficher le message de victoire ou de défaite
         
         # peut-être faire une condition du genre : 
@@ -95,14 +105,19 @@ class Partie():
         
         # On demande les coordonnées d'une case à dévoiler avec
         # demander_coordonnees_case_a_devoiler(self) ?
-        
+        ## JD Oui je crois que c'est ça qu'on doit faire.
+
         # On dévoile la case avec devoiler_case() de tableau.py ?
+        ## JD Oui.
         
         # On détecte si une mine a été actionnée avec contient_mine() de tableau.py ?
-        
+        ## JD Oui.
+
         # On créer une condition du genre :
         # if self.tableau_mines.contient_mine() or not self.tableau_mines.contient_cases_a_devoiler() :
         #   self.partie_terminee = True
+        ## JD contient_mine() va nous retourner True alors oui on peut faire ça.
+
         pass
         
     def valider_coordonnees(self, rangee_x, colonne_y):
@@ -124,7 +139,10 @@ class Partie():
         # TODO: À programmer.
         
         # 1) utiliser .isnumeric() ?
+        ## JD oui c'est ce que j'utiliserais.
+
         # 2) et 3) utiliser valider_coordonnees_a_devoiler ?
+        ## JD Oui.
         pass
     
     def demander_coordonnees_case_a_devoiler(self):
@@ -139,6 +157,19 @@ class Partie():
             int: Numéro de la colonne
 
         """ 
+        ## JD le code va ressembler à quelque chose comme ça selon-moi.
+        ##
+        ##  coordonnees = ()
+        ##  while not self.valider_coordonnees:
+        ##      colonne_y = input("Entrez le numéro de ligne: ")
+        ##      rangee_x = input("Entrez le numéro de colonne: ")
+        ##      self.valider_coordonnees(rangee_x, colonne_y)
+        ##
+        ##   coordonnees.append(int(colonne_y))
+        ##   coordonnees.append(int(ranger_x))
+        ##
+        ##   return coordonnees
+
         # TODO: À programmer.
         pass
 
