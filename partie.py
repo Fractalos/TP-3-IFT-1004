@@ -59,6 +59,7 @@ class Partie():
         ## variables sont dans les attributs de la classe. Je n'ai pas fini mon analyse, mais si la fonction
         ## Tableau est appelée d'un autre endroit dans le programme on ne voudra peut-être pas poser la question
         ## à l'utilisateur.
+        # Effectivement, je pense que tu as raison.
 
         self.tableau_mines = Tableau()
         
@@ -73,6 +74,11 @@ class Partie():
 
         ## JD Quand on sort de cette boucle c'est que la partie est terminée donc est-ce qu'on
         ## doit utilsier le return ou tout simplement afficher victoire ou défaite?
+        
+        # Comme expliqué dans mon commentaire ci-dessous (lignes 94-96), il faut de toutes manières afficher
+        # le tableau solution, alors on pourrait mettre un return pour le tableau solution, 
+        # devant la ligne 73, et mettre des prints pour défaite et victoire. Il nous
+        # faut absolument un return sinon ça risque de retourner None par défaut avec le message de victoire/défaite.
 
         ### TODO: Afficher le message de victoire ou de défaite
         
@@ -169,7 +175,17 @@ class Partie():
         ##   coordonnees.append(int(ranger_x))
         ##
         ##   return coordonnees
-
+        
+        # C'est très bien comme code je pense, mais il faudrait considérer deux petites choses je pense :
+        # 1) On ne dirait pas qu'il faille retourner un tuple, mais seulement deux entiers 
+        #    Pourrait seulement faire un truc du genre return rangee_x, colonne_y ?
+        #    ** Aussi, on ne peut pas effectuer la méthode .append sur un tuple, on peut seulement
+        #       concaténer (le tuple étant comme tu le sais un objet immuable)
+        # 2) pour entrer dans la boucle de la ligne 169, ne faudrait-il pas d'abord attribuer à
+        #    self.valider_coordonnees une valeur booléenne particulière ?
+        #    Vu que tu as mis while not, on pourrait d'abord fixer la valeur à False.
+        
+        
         # TODO: À programmer.
         pass
 
