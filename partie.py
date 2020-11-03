@@ -107,7 +107,7 @@ class Partie():
             - On détecte si toutes les cases ont été dévoilées, 
               auquel cas affecte True à l'attribut self.partie_terminee.
         """
-        # TODO: À programmer.
+        # TODO: Débuté non finalisé, à programmer.
         
         # On demande les coordonnées d'une case à dévoiler avec
         # demander_coordonnees_case_a_devoiler(self) ?
@@ -123,6 +123,9 @@ class Partie():
         # if self.tableau_mines.contient_mine() or not self.tableau_mines.contient_cases_a_devoiler() :
         #   self.partie_terminee = True
         ## JD contient_mine() va nous retourner True alors oui on peut faire ça.
+
+        self.demander_coordonnees_case_a_devoiler()
+        Tableau.devoiler_case(self)
 
         pass
         
@@ -175,15 +178,20 @@ class Partie():
         return colonne_y, rangee_x
 
 
+def test_tour():
+
+    test_partie = Partie()
+    assert test_partie.tour()
+
 def test_demander_coordonnees_case_a_devoiler():
 
     test_partie = Partie()
-
     assert test_partie.demander_coordonnees_case_a_devoiler()
 
 
 if __name__ == '__main__':
 
     print('Tests unitaires...')
-    test_demander_coordonnees_case_a_devoiler()
+    #test_demander_coordonnees_case_a_devoiler()
+    test_tour()
     print('Tests réussis!')
