@@ -150,6 +150,7 @@ class Partie():
         # 2) et 3) utiliser valider_coordonnees_a_devoiler ?
         ## JD Oui.
         pass
+
     
     def demander_coordonnees_case_a_devoiler(self):
         """
@@ -162,30 +163,27 @@ class Partie():
             int: Numéro de la rangée
             int: Numéro de la colonne
 
-        """ 
-        ## JD le code va ressembler à quelque chose comme ça selon-moi.
-        ##
-        ##  coordonnees = ()
-        ##  while not self.valider_coordonnees:
-        ##      colonne_y = input("Entrez le numéro de ligne: ")
-        ##      rangee_x = input("Entrez le numéro de colonne: ")
-        ##      self.valider_coordonnees(rangee_x, colonne_y)
-        ##
-        ##   coordonnees.append(int(colonne_y))
-        ##   coordonnees.append(int(ranger_x))
-        ##
-        ##   return coordonnees
-        
-        # C'est très bien comme code je pense, mais il faudrait considérer deux petites choses je pense :
-        # 1) On ne dirait pas qu'il faille retourner un tuple, mais seulement deux entiers 
-        #    Pourrait seulement faire un truc du genre return rangee_x, colonne_y ?
-        #    ** Aussi, on ne peut pas effectuer la méthode .append sur un tuple, on peut seulement
-        #       concaténer (le tuple étant comme tu le sais un objet immuable)
-        # 2) pour entrer dans la boucle de la ligne 169, ne faudrait-il pas d'abord attribuer à
-        #    self.valider_coordonnees une valeur booléenne particulière ?
-        #    Vu que tu as mis while not, on pourrait d'abord fixer la valeur à False.
-        
-        
-        # TODO: À programmer.
-        pass
+        """
 
+        validation = False
+
+        while not validation:
+            colonne_y = input("Entrez le numéro de ligne: ")
+            rangee_x = input("Entrez le numéro de colonne: ")
+            validation = self.valider_coordonnees(rangee_x, colonne_y)
+
+        return colonne_y, rangee_x
+
+
+def test_demander_coordonnees_case_a_devoiler():
+
+    test_partie = Partie()
+
+    assert test_partie.demander_coordonnees_case_a_devoiler()
+
+
+if __name__ == '__main__':
+
+    print('Tests unitaires...')
+    test_demander_coordonnees_case_a_devoiler()
+    print('Tests réussis!')
