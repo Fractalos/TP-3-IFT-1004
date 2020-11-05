@@ -107,27 +107,19 @@ class Partie():
             - On détecte si toutes les cases ont été dévoilées, 
               auquel cas affecte True à l'attribut self.partie_terminee.
         """
-        # TODO: Débuté non finalisé, à programmer.
-        
-        # On demande les coordonnées d'une case à dévoiler avec
-        # demander_coordonnees_case_a_devoiler(self) ?
-        ## JD Oui je crois que c'est ça qu'on doit faire.
+        tour_x = 0
+        tour_y = 0
 
-        # On dévoile la case avec devoiler_case() de tableau.py ?
-        ## JD Oui.
-        
-        # On détecte si une mine a été actionnée avec contient_mine() de tableau.py ?
-        ## JD Oui.
+        # Demander à l'utilisateur les coordonnées d'une case à dévoiler.
+        coordonnees = self.demander_coordonnees_case_a_devoiler()
 
-        # On créer une condition du genre :
-        # if self.tableau_mines.contient_mine() or not self.tableau_mines.contient_cases_a_devoiler() :
-        #   self.partie_terminee = True
-        ## JD contient_mine() va nous retourner True alors oui on peut faire ça.
+        # Pour séparer le tuple retourné par demander_coordonnees_case_a_devoiler.
+        tour_x, tour_y = int(coordonnees[0]), int(coordonnees[1])
+        Tableau.devoiler_case(self, tour_x, tour_y) # On dévoile la case. ##TODO à valider.
 
-        self.demander_coordonnees_case_a_devoiler()
-        Tableau.devoiler_case(self)
-
-        pass
+        # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
+        if Tableau.contient_mine(self, tour_x, tour_y) == True or Tableau.contient_cases_a_devoiler(self) == False:
+            self.partie_terminee = True
         
     def valider_coordonnees(self, rangee_x, colonne_y):
         """
@@ -171,17 +163,18 @@ class Partie():
         validation = False
 
         while not validation:
-            colonne_y = input("Entrez le numéro de ligne: ")
             rangee_x = input("Entrez le numéro de colonne: ")
+            colonne_y = input("Entrez le numéro de ligne: ")
+
             validation = self.valider_coordonnees(rangee_x, colonne_y)
 
-        return colonne_y, rangee_x
+        return rangee_x, colonne_y
 
 
 def test_tour():
 
     test_partie = Partie()
-    assert test_partie.tour()
+    assert not test_partie.tour()
 
 def test_demander_coordonnees_case_a_devoiler():
 
@@ -191,7 +184,7 @@ def test_demander_coordonnees_case_a_devoiler():
 
 if __name__ == '__main__':
 
-    print('Tests unitaires...')
+    #print('Tests unitaires...')
     #test_demander_coordonnees_case_a_devoiler()
-    test_tour()
-    print('Tests réussis!')
+    #test_tour()
+    #print('Tests réussis!')
