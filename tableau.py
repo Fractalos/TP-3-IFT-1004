@@ -180,7 +180,7 @@ class Tableau():
                 elif rangee_x == 0:
                     # En-tête: numéro de la colonne 
                     # (si y > 10, on affiche seulement l'unité pour éviter les décalages)
-                    car = f'{colonne_y%10}' 
+                    car = f'{colonne_y%10}'
                 elif colonne_y == 0:
                     # Début de ligne: numéro de la ligne sur deux caractères,
                     # suivi d'une ligne verticale.
@@ -206,7 +206,41 @@ class Tableau():
         Méthode qui affiche le tableau à l'écran. Le tableau montre le contenu des cases dévoilées 
         (mine ou nombre de mines voisines) ou un point pour les cases non dévoilées.
         """
-        # TODO: À compléter
+        # TODO: JD commencé à terminer.
+
+        print()  # Retour de ligne
+
+        for rangee_x in range(0, self.dimension_rangee + 1):
+
+            # Affichage d'une ligne, caractère par caractère
+            for colonne_y in range(0, self.dimension_colonne + 1):
+                if rangee_x == 0 and colonne_y == 0:
+                    # Premiers caractères de l'en-tête (coin supérieur gauche)
+                    car = '  |'
+                elif rangee_x == 0:
+                    # En-tête: numéro de la colonne
+                    # (si y > 10, on affiche seulement l'unité pour éviter les décalages)
+                    car = f'{colonne_y % 10}'
+                elif colonne_y == 0:
+                    # Début de ligne: numéro de la ligne sur deux caractères,
+                    # suivi d'une ligne verticale.
+                    car = f'{rangee_x:<2}|'
+                else:
+                    # Contenu d'une case
+                    case_xy = self.obtenir_case(rangee_x, colonne_y)
+                    if case_xy.est_minee:
+                        car = 'M'
+                    else:
+                        car = str(case_xy.nombre_mines_voisines)
+
+                # Afficher le caractère suivit d'un espace (sans retour de ligne)
+                print(car, end=" ")
+
+            # À la fin de chaque ligne
+            print()  # Retour de ligne
+            if rangee_x == 0:  # Ligne horizontale de l'en-tête
+                print('--+-' + '--' * self.dimension_colonne)
+
         pass
 
     def contient_cases_a_devoiler(self):
@@ -235,8 +269,7 @@ class Tableau():
             colonne_y (int): Numéro de la colonne de la case à dévoiler
         """
         # TODO: À compléter   
-        
-        
+
         # if not contient_mine :
         #   self.nombre_cases_sans_mine_a_devoiler -= 1 ?
         # if not est_voisine_d_une_mine:
