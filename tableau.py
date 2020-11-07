@@ -146,13 +146,13 @@ class Tableau():
             if self.dictionnaire_cases[coordonnees_mine].est_minee == True:
                 pass # Si la case contient déjà une mine on génère on passe pour générer une nouvelle coordonnée.
             else:
-                self.dictionnaire_cases[coordonnees_mine].est_minee = True ##TODO Je ne suis pas capable d'utiliser Case.ajouter_mine
+                Case.ajouter_mine(self.dictionnaire_cases[coordonnees_mine])
                 # Pour obtenir la liste des cases voisines et incrémenter mine_voisine.
-                liste_voisin = self.obtenir_voisins(coordonnees_mine[0], coordonnees_mine[1]) ##TODO À tester final quand obtenir_voisins va être codé.
+                liste_voisin = self.obtenir_voisins(coordonnees_mine[0], coordonnees_mine[1])
                 longueur_liste = len(liste_voisin)
                 j = 0
                 while j <= longueur_liste - 1:
-                    self.dictionnaire_cases[liste_voisin[j]].ajouter_une_mine_voisine
+                    Case.ajouter_une_mine_voisine(self.dictionnaire_cases[liste_voisin[j]])
                     j += 1
                 i += 1
     
@@ -219,7 +219,6 @@ class Tableau():
         Méthode qui affiche le tableau à l'écran. Le tableau montre le contenu des cases dévoilées 
         (mine ou nombre de mines voisines) ou un point pour les cases non dévoilées.
         """
-        # TODO: JD commencé à terminer.
 
         print()  # Retour de ligne
 
