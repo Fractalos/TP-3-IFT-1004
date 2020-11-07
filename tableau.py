@@ -2,7 +2,7 @@
 """
 Module contenant la description de la classe Tableau. Un tableau est utilisé pour jouer une partie du jeu Démineur.
 
-Auteurs: à compléter
+Auteurs: Charlotte Lavoie-Bel et Jean-Dominique Doyon
 """
 
 from case import Case
@@ -134,14 +134,27 @@ class Tableau():
             for colonne_y in range(1, self.dimension_colonne+1):
                 coordonnees = (rangee_x, colonne_y)
                 self.dictionnaire_cases[coordonnees] = Case()
-        
-        # TODO: À compléter (étapes 2 et 3)
-        # Nous vous suggérons d'utiliser dans la fonction randint(a,b) du module random qui 
-        # retourne un entier aléatoire compris entre a et b inclusivement.
-        
-        # 2) pour ajouter une mine à la case, faut-il faire Case.ajouter_mine ?
-        # for case in liste_coordonnees_cases_voisines :
-        #   Case.ajouter_une_mine_voisine ? # Je ne suis pas sûre que c'est adéquat
+
+        i = 0
+        coordonnees_mine = ()
+        mine_a_ajouter = self.nombre_mines
+        liste_voisin = []
+
+        while i < mine_a_ajouter:
+            #Pour générer les coordonnées au hasard.
+            coordonnees_mine = randint(1, self.dimension_rangee), randint(1, self.dimension_colonne)
+            if self.dictionnaire_cases[coordonnees_mine].est_minee == True:
+                pass # Si la case contient déjà une mine on génère on passe pour générer une nouvelle coordonnée.
+            else:
+                self.dictionnaire_cases[coordonnees_mine].est_minee = True ##TODO Je ne suis pas capable d'utiliser Case.ajouter_mine
+                # Pour obtenir la liste des cases voisines et incrémenter mine_voisine.
+                liste_voisin = self.obtenir_voisins(coordonnees_mine[0], coordonnees_mine[1]) ##TODO À tester final quand obtenir_voisins va être codé.
+                longueur_liste = len(liste_voisin)
+                j = 0
+                while j <= longueur_liste - 1:
+                    self.dictionnaire_cases[liste_voisin[j]].ajouter_une_mine_voisine
+                    j += 1
+                i += 1
     
     def valider_coordonnees_a_devoiler(self, rangee_x, colonne_y):
         """
@@ -228,10 +241,13 @@ class Tableau():
                 else:
                     # Contenu d'une case
                     case_xy = self.obtenir_case(rangee_x, colonne_y)
-                    if case_xy.est_minee:
-                        car = 'M'
+                    if case_xy.est_devoilee:
+                        if case_xy.est_minee:
+                            car = 'M'
+                        else:
+                            car = str(case_xy.nombre_mines_voisines)
                     else:
-                        car = str(case_xy.nombre_mines_voisines)
+                        car = '.'
 
                 # Afficher le caractère suivit d'un espace (sans retour de ligne)
                 print(car, end=" ")
