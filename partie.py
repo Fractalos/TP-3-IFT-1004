@@ -137,14 +137,8 @@ class Partie():
         Returns:
             bool : True si les coordonnées sont valides, False autrement.
         """
-        # TODO: À programmer.
-        
-        # 1) utiliser .isnumeric() ?
-        ## JD oui c'est ce que j'utiliserais.
-
-        # 2) et 3) utiliser valider_coordonnees_a_devoiler ?
-        ## JD Oui.
-        pass
+        rangee_x_a_tester, colonne_y_a_tester = str(rangee_x), str(colonne_y)
+        return rangee_x_a_tester.isnumeric() and colonne_y_a_tester.isnumeric() and Tableau.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
 
     
     def demander_coordonnees_case_a_devoiler(self):
@@ -168,7 +162,7 @@ class Partie():
 
             validation = self.valider_coordonnees(rangee_x, colonne_y)
 
-        return rangee_x, colonne_y
+        return rangee_x and colonne_y # J'ai demandé à Pascal implicitement pendant le cours, si on met la virgule, ça retourne un tuple, je ne veux pas m'imposer dans ce que tu as fait, mais j'ai peur d'oublier si ne ne le mets pas tout de suite :-).
 
 
 def test_tour():

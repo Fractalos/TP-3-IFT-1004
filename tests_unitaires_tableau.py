@@ -76,3 +76,4 @@ if __name__ == '__main__':
     # v = tableau_test.contient_mine(1,1)
     # print(v)
 
+    print(tableau_test.valider_coordonnees_a_devoiler(1,4))
