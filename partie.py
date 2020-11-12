@@ -107,8 +107,8 @@ class Partie():
 
         if rangee_x.isnumeric() and colonne_y.isnumeric():
             rangee_x, colonne_y = int(rangee_x), int(colonne_y)
-            v = Tableau().valider_coordonnees_a_devoiler(rangee_x, colonne_y)
-            return v
+            verdict = self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
+            return verdict
         
         else :
             return False
@@ -139,13 +139,14 @@ class Partie():
         # J'ai rajouté des int() parce que ça m'empêchait d'y voir clair pour une autre méthode :-).
 
 def test_tour():
-
+    
     test_partie = Partie()
     assert not test_partie.tour()
 
 def test_demander_coordonnees_case_a_devoiler():
 
     test_partie = Partie()
+    test_partie.tableau_mines = Tableau()
     assert test_partie.demander_coordonnees_case_a_devoiler()
 
 
