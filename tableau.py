@@ -100,25 +100,15 @@ class Tableau():
                      (1, -1),  (1, 0),  (1, 1))
 
         liste_coordonnees_cases_voisines = []
+        case = (rangee_x, colonne_y) 
 
-        # TODO: Générer la liste des coordonnées valides des cases voisine. Le tuple voisinage est là pour vous aider.
+        for voisin in voisinage :                               # Pour toutes les cases voisines, on additionne la coordonnée en x (respectivement y)
+            x, y  = case[0] + voisin[0], case[1] + voisin[1]    # de la case avec celle en x (respectivement y) de son voisin.
+                                                                
+            if self.valider_coordonnees(x,y):                   # On vérifie si la case voisine est dans le tableau, i.e. respecte ses dimensions.
+                liste_coordonnees_cases_voisines.append((x,y))   
 
-        # Je pense que le code des lignes 114-118 fonctionne, mais je ne sais pas si la validation est correcte.
-
-        # case = self.obtenir_case() # valide si la case est dans les dimensions du tableau
-
-        # case_du_voisinage = ()
-
-        # if self.liste_coordonnees_cases_voisines(case): # valide si la case n'a pas déjà été dévoilée
-
-        #     for voisin in voisinage :
-        #         x, y  = case[0] + voisin[0], case[1] + voisin[1]
-        #         case_du_voisinage = (x,) + (y,)
-        #         if self.valider_coordonnees_a_devoiler(case_du_voisinage):       # la case est-elle dans les dimensions du
-        #             liste_coordonnees_cases_voisines.append(case_du_voisinage)   # tableau et a
-
-
-        return liste_coordonnees_cases_voisines
+        return liste_coordonnees_cases_voisines    
 
     def initialiser_tableau(self):
         """
@@ -169,8 +159,10 @@ class Tableau():
             bool: True si la case à ces coordonnées (x, y) peut être dévoilée, False autrement (donc si la
                   case a déjà été dévoilée ou que les coordonnées ne dont pas valides).
         """  
-        # TODO: À compléter
-        pass
+        coordonnees = (rangee_x, colonne_y)
+        return self.valider_coordonnees(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases[coordonnees]
+            
+        
         
     def afficher_solution(self):
         """
@@ -266,12 +258,10 @@ class Tableau():
             bool: True s'il reste des cases à dévoiler, False autrement.
 
         """
-        # TODO: À compléter
-        # Si la case à dévoiler n'est pas dans le dictionnaire de case, alors 
-        # contient_cases_a_devoiler est True ? 
-        # J'ai l'impression qu'on n'a pas à s'en servir dans tableau.py, mais
-        # plutôt dans partie.py, plus précisément dans tour(self) ?
-        pass
+        return len(self.dictionnaire_cases) < self.dimension_rangee * self.dimension_colonne
+        # si le dictionnaire contient toutes les cases, la somme de ses couples est égale au produit
+        # du nombre de lignes et du nombre de colonnes du tablau. Si au contraire il reste des cases 
+        # à dévoiler, alors le dictionnaire ne contient pas toutes les cases du tableau.
 
     def devoiler_case(self, rangee_x, colonne_y):
         """
@@ -282,14 +272,13 @@ class Tableau():
         Args:
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
-        """
-        # TODO: À compléter   
-
-        # if not contient_mine :
-        #   self.nombre_cases_sans_mine_a_devoiler -= 1 ?
-        # if not est_voisine_d_une_mine:
-        #   return obtenir_voisins
-        pass        
+        """ 
+        if not self.contient_mine :
+            self.nombre_cases_sans_mine_a_devoiler -= 1
+            return self.dictionnaire_cases[(rangee_x,colonne_y)]
+            
+        if not Case.est_voisine_d_une_mine:
+            return self.obtenir_voisins
         
     def contient_mine(self, rangee_x, colonne_y):
         """
@@ -302,11 +291,9 @@ class Tableau():
         Returns:
             bool: True si la case à ces coordonnées (x, y) contient une mine, False autrement.
         """
-        # TODO: À compléter 
         
-        # Faut-il aller chercher les clés du dictionnaire_cases dans
-        # initialiser_tableau pour les tester avec Case.est_minee (attribut de Case())?
-        pass
+        coordonnees = (rangee_x, colonne_y)
+        return self.dictionnaire_cases[coordonnees].est_minee
 
 
 #### Tests unitaires (à compléter) ###
@@ -329,21 +316,21 @@ def test_valider_coordonnees():
     assert not tableau_test.valider_coordonnees(-dimension_x, dimension_y)
     assert not tableau_test.valider_coordonnees(0, 0)
     
-def test_obtenir_voisins():
-    # TODO: À compléter. 
-    pass
+# def test_obtenir_voisins():
+#     # TODO: À compléter. 
+#     pass
     
-def test_valider_coordonnees_a_devoiler():
-    # TODO: À compléter. 
-    pass
+# def test_valider_coordonnees_a_devoiler():
+#     # TODO: À compléter. 
+#     pass
     
-def test_devoiler_case():
-    # TODO: À compléter. 
-    pass
+# def test_devoiler_case():
+#     # TODO: À compléter. 
+#     pass
     
-def test_case_contient_mine():
-    # TODO: À compléter. 
-    pass
+# def test_case_contient_mine():
+#     # TODO: À compléter. 
+#     pass
 
 
 if __name__ == '__main__':
@@ -351,19 +338,19 @@ if __name__ == '__main__':
     # CLes cinq prochaines lignes de code sont là pour vous aider à tester votre 
     # première tentative d'implémentation des méthodes initialiser_tableau et afficher_tableau.
     
-    tableau_test = Tableau()
-    print('\nTABLEAU:')
-    tableau_test.afficher_tableau()
-    print('\nSOLUTION:')   
-    tableau_test.afficher_solution()
+    # tableau_test = Tableau()
+    # print('\nTABLEAU:')
+    # tableau_test.afficher_tableau()
+    # print('\nSOLUTION:')   
+    # tableau_test.afficher_solution()
     
     print('Tests unitaires...')
     test_initialisation()
     test_valider_coordonnees()
-    test_obtenir_voisins()
-    test_valider_coordonnees_a_devoiler()
-    test_devoiler_case()
-    test_case_contient_mine()
+    # test_obtenir_voisins()
+    # test_valider_coordonnees_a_devoiler()
+    # test_devoiler_case()
+    # test_case_contient_mine()
     print('Tests réussis!')
     
     
