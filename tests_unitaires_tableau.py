@@ -28,7 +28,7 @@ class Tableau():
     def valider_coordonnees_a_devoiler(self, rangee_x, colonne_y):
         
         coordonnees = (rangee_x, colonne_y)
-        return self.valider_coordonnees(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases[coordonnees]
+        return self.valider_coordonnees(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases
             
     def obtenir_voisins(self, rangee_x, colonne_y):
         

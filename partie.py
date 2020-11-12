@@ -35,31 +35,16 @@ class Partie():
     def jouer(self):
         """
         Tant que la partie n'est pas terminée, on joue un tour de la partie. 
-        Une fois la partie terminée, on affiche le tableau de cases complètement dévoilée
+        Une fois la partie terminée, on affiche le tableau de cases complètement dévoilé
         et on indique un message sur l'issue de la partie (victoire ou défaite).
         """
+        # Le bout de code ci-dessous sera testé après avoir testé les dimensions par défaut.
         
-        ### TODO: Modifier le code pour demander à l'utilisateur de choisir la taille
-        ### du tableau (nombre de lignes et nombres de colonnes, ainsi que le nombre 
-        ### de mines)     
-        
-        ## Il est mentionné dans les consignes de commencer à tester le jeu avec les
-        ## valeurs par défaut. Cependant, suffirait-il de procéder comme suit ?
-        ## JD Les valeurs par défauts sont déjà "hard codé" dans la fonction d'initialisation de Tableau.
-        ## Selon-moi on peut y aller avec ce que tu suggères.
-
         # print('*** Options du jeu ***')
         # dimension_rangee = int(input('Entrez le nombre de lignes : '))
         # dimension_colonne = int(input('Entrez le nombre de colonnes : '))
         # nombre_mines = int(input('Entrez le nombre de mines : '))
-        # self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines))
-        # peut-être pourrait-on directement mettre les inputs dans Tableau.
-        #
-        ## JD: je crois qu'on doit laisser les inputs dans la fonction jouer comme tu l'as fait. Dans tableau ces
-        ## variables sont dans les attributs de la classe. Je n'ai pas fini mon analyse, mais si la fonction
-        ## Tableau est appelée d'un autre endroit dans le programme on ne voudra peut-être pas poser la question
-        ## à l'utilisateur.
-        # Effectivement, je pense que tu as raison.
+        # self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
 
         self.tableau_mines = Tableau()
         
@@ -72,28 +57,10 @@ class Partie():
             
         self.tableau_mines.afficher_solution()
 
-        ## JD Quand on sort de cette boucle c'est que la partie est terminée donc est-ce qu'on
-        ## doit utilsier le return ou tout simplement afficher victoire ou défaite?
-        
-        # Comme expliqué dans mon commentaire ci-dessous (lignes 94-96), il faut de toutes manières afficher
-        # le tableau solution, alors on pourrait mettre un return pour le tableau solution, 
-        # devant la ligne 73, et mettre des prints pour défaite et victoire. Il nous
-        # faut absolument un return sinon ça risque de retourner None par défaut avec le message de victoire/défaite.
-
-        ### TODO: Afficher le message de victoire ou de défaite
-        
-        # peut-être faire une condition du genre : 
-        #
-        # if self.tableau_mines.contient_case_a_devoiler(): 
-        #   print('Défaite!')
-        # else :
-        #   print('Victoire!') 
-        #
-        # return self.tableau_mines.afficher_solution()
-        #
-        # Il faudra faire attenton au return, pour ne pas que la méthode recrache 
-        # None avec le message de victoire ou de défaite. On doit de toutes 
-        # façon retourner le tableau solution
+        if self.tableau_mines.contient_case_a_devoiler(): 
+          return 'Défaite!'
+        else :
+          return 'Victoire!' 
                
     def tour(self):
         """ 
@@ -137,8 +104,14 @@ class Partie():
         Returns:
             bool : True si les coordonnées sont valides, False autrement.
         """
-        rangee_x_a_tester, colonne_y_a_tester = str(rangee_x), str(colonne_y)
-        return rangee_x_a_tester.isnumeric() and colonne_y_a_tester.isnumeric() and Tableau.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
+
+        if rangee_x.isnumeric() and colonne_y.isnumeric():
+            rangee_x, colonne_y = int(rangee_x), int(colonne_y)
+            v = Tableau().valider_coordonnees_a_devoiler(rangee_x, colonne_y)
+            return v
+        
+        else :
+            return False
 
     
     def demander_coordonnees_case_a_devoiler(self):
@@ -157,13 +130,13 @@ class Partie():
         validation = False
 
         while not validation:
-            rangee_x = input("Entrez le numéro de colonne: ")
-            colonne_y = input("Entrez le numéro de ligne: ")
+            rangee_x = input("Entrez le numéro de colonne : ")
+            colonne_y = input("Entrez le numéro de ligne : ")
 
             validation = self.valider_coordonnees(rangee_x, colonne_y)
 
-        return rangee_x and colonne_y # J'ai demandé à Pascal implicitement pendant le cours, si on met la virgule, ça retourne un tuple, je ne veux pas m'imposer dans ce que tu as fait, mais j'ai peur d'oublier si ne ne le mets pas tout de suite :-).
-
+        return int(rangee_x) and int(colonne_y) # J'ai demandé à Pascal implicitement pendant le cours, si on met la virgule, ça retourne un tuple, je ne veux pas m'imposer dans ce que tu as fait, mais j'ai peur d'oublier si ne ne le mets pas tout de suite :-).
+        # J'ai rajouté des int() parce que ça m'empêchait d'y voir clair pour une autre méthode :-).
 
 def test_tour():
 
@@ -178,7 +151,7 @@ def test_demander_coordonnees_case_a_devoiler():
 
 if __name__ == '__main__':
 
-    #print('Tests unitaires...')
-    #test_demander_coordonnees_case_a_devoiler()
-    #test_tour()
-    #print('Tests réussis!')
+    print('Tests unitaires...')
+    test_demander_coordonnees_case_a_devoiler()
+    test_tour()
+    print('Tests réussis!')

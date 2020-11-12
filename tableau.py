@@ -159,8 +159,17 @@ class Tableau():
             bool: True si la case à ces coordonnées (x, y) peut être dévoilée, False autrement (donc si la
                   case a déjà été dévoilée ou que les coordonnées ne dont pas valides).
         """  
+        #version longue pour voir ce qui se passe avec le déboguage
+        
         coordonnees = (rangee_x, colonne_y)
-        return self.valider_coordonnees(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases[coordonnees]
+        if self.valider_coordonnees(rangee_x, colonne_y) :
+            v = coordonnees not in self.dictionnaire_cases
+            return v
+        else :
+            return False
+        
+        # version courte
+        #return self.valider_coordonnees(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases
             
         
         

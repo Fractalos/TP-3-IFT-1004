@@ -5,12 +5,6 @@ Created on Wed Nov 11 22:16:54 2020
 @author: Utilisateur
 """
 
-##  !!!
-##
-# message d'erreur ligne 37 : TypeError: argument of type 'bool' is not iterable
-##
-##  !!!
-
 class Tableau():
 
     def __init__(self, dimension_rangee=5, dimension_colonne=5, nombre_mines=5):
@@ -34,7 +28,7 @@ class Tableau():
     def valider_coordonnees_a_devoiler(self, rangee_x, colonne_y):
         
         coordonnees = (rangee_x, colonne_y)
-        return self.valider_coordonnees_tableau(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases[coordonnees]
+        return self.valider_coordonnees_tableau(rangee_x, colonne_y) and coordonnees not in self.dictionnaire_cases
         
         
     def valider_coordonnees(self, rangee_x, colonne_y):
