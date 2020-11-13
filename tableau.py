@@ -255,11 +255,11 @@ class Tableau():
             bool: True s'il reste des cases à dévoiler, False autrement.
 
         """
-        contient_cases_a_devoiler = False
+        cases_a_devoiler = False
         for case in self.dictionnaire_cases.values() :
-            if case.est_devoilee:
-                return True
-        return contient_cases_a_devoiler
+            if not case.est_devoilee:
+                cases_a_devoiler = True
+        return cases_a_devoiler
 
     def devoiler_case(self, rangee_x, colonne_y):
         """
@@ -299,22 +299,22 @@ class Tableau():
 ##       la méthode contient_case_a_devoiler fonctionne (je l'ai testée independamment), tu peux voir que la logique est valide en mode débug.
 ##       Les valeurs du dictionnaire sont-elles autre chose que Case dans la méthode initialiser ?      
 
-#def test_initialisation():
-#    tableau_test = Tableau()
-#    assert tableau_test.contient_cases_a_devoiler() # assert not fait réussir les tests
-#    assert tableau_test.nombre_cases_sans_mine_a_devoiler == tableau_test.dimension_colonne * \
-#         tableau_test.dimension_rangee - tableau_test.nombre_mines
+def test_initialisation():
+    tableau_test = Tableau()
+    assert tableau_test.contient_cases_a_devoiler() # assert not fait réussir les tests
+    assert tableau_test.nombre_cases_sans_mine_a_devoiler == tableau_test.dimension_colonne * \
+        tableau_test.dimension_rangee - tableau_test.nombre_mines
 
-# def test_valider_coordonnees():
+def test_valider_coordonnees():
 
-#     tableau_test = Tableau()
-#     dimension_x, dimension_y = tableau_test.dimension_rangee, tableau_test.dimension_colonne
+    tableau_test = Tableau()
+    dimension_x, dimension_y = tableau_test.dimension_rangee, tableau_test.dimension_colonne
 
-#     assert tableau_test.valider_coordonnees(dimension_x, dimension_y)
-#     assert not tableau_test.valider_coordonnees(dimension_x+1, dimension_y)
-#     assert not tableau_test.valider_coordonnees(dimension_x, dimension_y+1)
-#     assert not tableau_test.valider_coordonnees(-dimension_x, dimension_y)
-#     assert not tableau_test.valider_coordonnees(0, 0)
+    assert tableau_test.valider_coordonnees(dimension_x, dimension_y)
+    assert not tableau_test.valider_coordonnees(dimension_x+1, dimension_y)
+    assert not tableau_test.valider_coordonnees(dimension_x, dimension_y+1)
+    assert not tableau_test.valider_coordonnees(-dimension_x, dimension_y)
+    assert not tableau_test.valider_coordonnees(0, 0)
     
 # def test_obtenir_voisins():
 #     # TODO: À compléter. 
@@ -333,7 +333,7 @@ class Tableau():
 #     pass
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
 #     # CLes cinq prochaines lignes de code sont là pour vous aider à tester votre 
 #     # première tentative d'implémentation des méthodes initialiser_tableau et afficher_tableau.
@@ -344,14 +344,14 @@ class Tableau():
 #     # print('\nSOLUTION:')   
 #     # tableau_test.afficher_solution()
     
-#     print('Tests unitaires...')
-#     test_initialisation()
-#     test_valider_coordonnees()
+     print('Tests unitaires...')
+     test_initialisation()
+     test_valider_coordonnees()
 #     # test_obtenir_voisins()
 #     # test_valider_coordonnees_a_devoiler()
 #     # test_devoiler_case()
 #     # test_case_contient_mine()
-#     print('Tests réussis!')
+     print('Tests réussis!')
     
     
     
