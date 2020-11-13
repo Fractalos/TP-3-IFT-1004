@@ -107,9 +107,7 @@ class Partie():
 
         if rangee_x.isnumeric() and colonne_y.isnumeric():
             rangee_x, colonne_y = int(rangee_x), int(colonne_y)
-            verdict = self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
-            return verdict
-        
+            return self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
         else :
             return False
 
