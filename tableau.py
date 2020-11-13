@@ -29,7 +29,7 @@ class Tableau():
                 x étant le numéro de la rangée, y étant le numéro de la colonne.
             Les éléments sont des objets de la classe Case.
     """
-    def __init__(self, dimension_rangee=5, dimension_colonne=5, nombre_mines=5):
+    def __init__(self, dimension_rangee, dimension_colonne, nombre_mines):
         """ Initialisation d'un objet tableau.
         
         Attributes:
@@ -159,7 +159,7 @@ class Tableau():
             bool: True si la case à ces coordonnées (x, y) peut être dévoilée, False autrement (donc si la
                   case a déjà été dévoilée ou que les coordonnées ne dont pas valides).
         """          
-        return self.valider_coordonnees(rangee_x, colonne_y) and self.dictionnaire_cases[(rangee_x, colonne_y)].est_devoilee
+        return self.valider_coordonnees(rangee_x, colonne_y) and not self.dictionnaire_cases[(rangee_x, colonne_y)].est_devoilee
         
     def afficher_solution(self):
         """
@@ -270,13 +270,23 @@ class Tableau():
         Args:
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
-        """ 
-        if not self.contient_mine :
+        """             
+        if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
+            for voisin in self.obtenir_voisins(rangee_x,colonne_y):
+                Case.devoiler(self.dictionnaire_cases[voisin]) #on change le statut à est_devoilee
+                self.obtenir_case(voisin[0],voisin[1]).nombre_mines_voisines #on affiche (devoile) le contenu
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) #on change le statut à est_devoilee
+            self.obtenir_case(rangee_x, colonne_y).nombre_mines_voisines #on affiche (devoile) le contenu
+        
+        ##### Je ne comprends pas ce qu'il faut faire, question posée sur le forum     
+        
+        elif not self.contient_mine(rangee_x, colonne_y):
             self.nombre_cases_sans_mine_a_devoiler -= 1
-            return self.dictionnaire_cases[(rangee_x,colonne_y)]
+            self.obtenir_case(rangee_x, colonne_y).nombre_mines_voisines
+        
+        else:
+            self.obtenir_case(rangee_x, colonne_y).est_minee
             
-        if not self.dictionnaire_cases[(rangee_x,colonne_y)].est_voisine_d_une_mine:
-            return self.obtenir_voisins
         
     def contient_mine(self, rangee_x, colonne_y):
         """
@@ -293,21 +303,17 @@ class Tableau():
         return self.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
 
 
-#### Tests unitaires (à compléter) ###
-
-## NOTE: à la ligne 304, le test plante. Les valeurs du dictionnaire sont juste Case (ce n'est pas est_minee, est_devoilee, etc.)
-##       la méthode contient_case_a_devoiler fonctionne (je l'ai testée independamment), tu peux voir que la logique est valide en mode débug.
-##       Les valeurs du dictionnaire sont-elles autre chose que Case dans la méthode initialiser ?      
+#### Tests unitaires ###
 
 def test_initialisation():
-    tableau_test = Tableau()
-    assert tableau_test.contient_cases_a_devoiler() # assert not fait réussir les tests
+    tableau_test = Tableau(5,5,5)
+    assert tableau_test.contient_cases_a_devoiler() 
     assert tableau_test.nombre_cases_sans_mine_a_devoiler == tableau_test.dimension_colonne * \
         tableau_test.dimension_rangee - tableau_test.nombre_mines
 
 def test_valider_coordonnees():
 
-    tableau_test = Tableau()
+    tableau_test = Tableau(5,5,5)
     dimension_x, dimension_y = tableau_test.dimension_rangee, tableau_test.dimension_colonne
 
     assert tableau_test.valider_coordonnees(dimension_x, dimension_y)
@@ -316,42 +322,75 @@ def test_valider_coordonnees():
     assert not tableau_test.valider_coordonnees(-dimension_x, dimension_y)
     assert not tableau_test.valider_coordonnees(0, 0)
     
-# def test_obtenir_voisins():
-#     # TODO: À compléter. 
-#     pass
+def test_obtenir_voisins():
+    tableau_test = Tableau(5,5,5)
+    assert tableau_test.obtenir_voisins(3, 3) == [(2, 2), (2, 3), (2, 4), (3, 2), (3, 4), (4, 2), (4, 3), (4, 4)]
+    assert tableau_test.obtenir_voisins(1, 1) == [(1, 2), (2, 1), (2, 2)]
+    assert not tableau_test.obtenir_voisins(5, 3) == [(4, 2), (4, 3), (4, 4), (5, 2), (5, 3), (5,4)]
     
-# def test_valider_coordonnees_a_devoiler():
-#     # TODO: À compléter. 
-#     pass
+    tableau_test1 = Tableau(10,10,5)
+    assert tableau_test1.obtenir_voisins(5, 3) == [(4, 2), (4, 3), (4, 4), (5, 2), (5,4), (6, 2), (6, 3), (6, 4)]
     
-# def test_devoiler_case():
-#     # TODO: À compléter. 
-#     pass
+def test_valider_coordonnees_a_devoiler():
+    tableau_test = Tableau(5,5,5)
+    assert tableau_test.valider_coordonnees_a_devoiler(1,4)
+    assert not tableau_test.valider_coordonnees_a_devoiler(6,5)
     
-# def test_case_contient_mine():
-#     # TODO: À compléter. 
-#     pass
+    Case.devoiler(tableau_test.dictionnaire_cases[(5,2)])
+    assert tableau_test.dictionnaire_cases[(5,2)].est_devoilee
+    assert not tableau_test.dictionnaire_cases[(2,5)].est_devoilee
+    
+def test_devoiler_case():
+    tableau_test = Tableau(5,5,0)
+    Case.ajouter_mine(tableau_test.dictionnaire_cases[(1,1)])
+    Case.ajouter_mine(tableau_test.dictionnaire_cases[(1,3)])
+    Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,1)])
+    Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
+    Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
+    
+    # print(tableau_test.devoiler_case(4,4))
+    # print(tableau_test.obtenir_case(4,4))
+    # print(tableau_test.contient_mine(4,4)) # False
+    # print(Case.est_voisine_d_une_mine(tableau_test.dictionnaire_cases[(4,4)])) # False
+    # print(tableau_test.devoiler_case(4,4))
+    
+    #assert tableau_test.devoiler_case(2,1) == tableau_test.dictionnaire_cases[(2,1)].nombre_mines_voisines
+    #assert tableau_test.devoiler_case(2,2) == tableau_test.dictionnaire_cases[(2,2)].nombre_mines_voisines
+    #assert tableau_test.devoiler_case(1,1) == tableau_test.dictionnaire_cases[(1,1)].est_minee
+    
+    
+    print(tableau_test.dictionnaire_cases[(2,1)].nombre_mines_voisines)
+    print(tableau_test.devoiler_case(2,1))
 
+def test_case_contient_mine():
+    tableau_test1 = Tableau(5,5,25)
+    tableau_test2 = Tableau(5,5,0)
+    i, j = 1,1
+    while i <= 5 and j <= 5 :
+        assert tableau_test1.contient_mine(i,j)
+        assert not tableau_test2.contient_mine(i,j)
+        i += 1
+        j += 1
+    
+    Case.ajouter_mine(tableau_test2.dictionnaire_cases[(3,2)])
+    assert tableau_test2.dictionnaire_cases[(3,2)].est_minee
 
 if __name__ == '__main__':
-
-#     # CLes cinq prochaines lignes de code sont là pour vous aider à tester votre 
-#     # première tentative d'implémentation des méthodes initialiser_tableau et afficher_tableau.
     
-#     # tableau_test = Tableau()
-#     # print('\nTABLEAU:')
-#     # tableau_test.afficher_tableau()
-#     # print('\nSOLUTION:')   
-#     # tableau_test.afficher_solution()
+    tableau_test = Tableau(5,5,5)
+    print('\nTABLEAU:')
+    tableau_test.afficher_tableau()
+    print('\nSOLUTION:')   
+    tableau_test.afficher_solution()
     
-     print('Tests unitaires...')
-     test_initialisation()
-     test_valider_coordonnees()
-#     # test_obtenir_voisins()
-#     # test_valider_coordonnees_a_devoiler()
-#     # test_devoiler_case()
-#     # test_case_contient_mine()
-     print('Tests réussis!')
+    print('Tests unitaires...')
+    test_initialisation()
+    test_valider_coordonnees()
+    test_obtenir_voisins()
+    test_valider_coordonnees_a_devoiler()
+    test_devoiler_case()
+    test_case_contient_mine()
+    print('Tests réussis!')
     
     
     

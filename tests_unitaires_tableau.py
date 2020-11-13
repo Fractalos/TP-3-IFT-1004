@@ -58,7 +58,7 @@ if __name__ == '__main__':
     
     def test_valider_coordonnees_a_devoiler():
         assert tableau_test.valider_coordonnees_a_devoiler(1,4)
-        assert not tableau_test.valider_coordonnees_a_devoiler(3,2)
+        assert not tableau_test.valider_coordonnees_a_devoiler(6,5)
         assert tableau_test.valider_coordonnees_a_devoiler(5,5)
         assert not tableau_test.valider_coordonnees_a_devoiler(11, 10)
         assert not tableau_test.valider_coordonnees_a_devoiler(5, 0)

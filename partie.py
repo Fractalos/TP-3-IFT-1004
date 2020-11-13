@@ -40,11 +40,11 @@ class Partie():
         """
         # Le bout de code ci-dessous sera testé après avoir testé les dimensions par défaut.
         
-        # print('*** Options du jeu ***')
-        # dimension_rangee = int(input('Entrez le nombre de lignes : '))
-        # dimension_colonne = int(input('Entrez le nombre de colonnes : '))
-        # nombre_mines = int(input('Entrez le nombre de mines : '))
-        # self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
+        print('*** Options du jeu ***')
+        dimension_rangee = int(input('Entrez le nombre de lignes : '))
+        dimension_colonne = int(input('Entrez le nombre de colonnes : '))
+        nombre_mines = int(input('Entrez le nombre de mines : '))
+        self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
 
         self.tableau_mines = Tableau()
         
