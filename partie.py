@@ -110,7 +110,6 @@ class Partie():
             return self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
         else :
             return False
-
     
     def demander_coordonnees_case_a_devoiler(self):
         """
@@ -124,7 +123,6 @@ class Partie():
             int: Numéro de la colonne
 
         """
-
         validation = False
 
         while not validation:

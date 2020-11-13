@@ -69,11 +69,6 @@ if __name__ == '__main__':
         assert tableau_test.obtenir_voisins(1, 1) == [(1, 3), (1, 4), (1, 5), (2, 3), (2, 5), (3, 3), (3, 4), (3, 5)]
         assert not tableau_test.obtenir_voisins(5, 3) == [(4, 2), (4, 3), (4, 4), (5, 2), (5, 4), (6, 2)]
         #print(tableau_test.obtenir_voisins(5, 3))
-        
-    # def test_case_contient_mine():
-    #     assert tableau_test.contient_mine(1,1)
-    #     assert not tableau_test.contient_mine(5, 5)    
-    # v = tableau_test.contient_mine(1,1)
-    # print(v)
+
 
     print(tableau_test.valider_coordonnees_a_devoiler(1,4))
