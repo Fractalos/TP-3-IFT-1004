@@ -84,6 +84,9 @@ class Partie():
         tour_x, tour_y = coordonnees[0], coordonnees[1]
         Tableau.devoiler_case(self, tour_x, tour_y) # On dévoile la case. ##TODO à valider.
 
+        ### Charlotte : faudrait-il Tableau.tableau_mines.devoiler_case ??
+
+
         # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
         if Tableau.contient_mine(self, tour_x, tour_y) == True or Tableau.contient_cases_a_devoiler(self) == False:
             self.partie_terminee = True

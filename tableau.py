@@ -271,23 +271,45 @@ class Tableau():
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
         """             
-        if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) 
-            self.nombre_cases_sans_mine_a_devoiler -= 1
-            for voisin in self.obtenir_voisins(rangee_x,colonne_y):
-
-                Case.devoiler(self.dictionnaire_cases[voisin])
-                self.nombre_cases_sans_mine_a_devoiler -= 1
+        if not self.tableau_mines.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.tableau_mines.dictionnaire_cases[(rangee_x,colonne_y)]):
+            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)]) 
+            self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
+            for voisin in self.tableau_mines.obtenir_voisins(rangee_x,colonne_y):
+                Case.devoiler(self.tableau_mines.dictionnaire_cases[voisin])
+                self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
         
       
-        elif not self.contient_mine(rangee_x, colonne_y): 
-            self.nombre_cases_sans_mine_a_devoiler -= 1   
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+        elif not self.tableau_mines.contient_mine(rangee_x, colonne_y): 
+            self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1   
+            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
         
         else:
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
+    
             
+    
+    # J'ai l'impression que je dois mettre tableau_mines ici finalement 
+    
+    
+    
+    
+    # if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
+    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) 
+    #         self.nombre_cases_sans_mine_a_devoiler -= 1
+    #         for voisin in self.obtenir_voisins(rangee_x,colonne_y):
+
+    #             Case.devoiler(self.dictionnaire_cases[voisin])
+    #             self.nombre_cases_sans_mine_a_devoiler -= 1
         
+      
+    #     elif not self.contient_mine(rangee_x, colonne_y): 
+    #         self.nombre_cases_sans_mine_a_devoiler -= 1   
+    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+        
+    #     else:
+    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])    
+    
+    
     def contient_mine(self, rangee_x, colonne_y):
         """
         Méthode qui vérifie si la case dont les coordonnées sont reçues en argument contient une mine.
@@ -300,7 +322,7 @@ class Tableau():
             bool: True si la case à ces coordonnées (x, y) contient une mine, False autrement.
         """
         
-        return self.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
+        return self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
 
 
 #### Tests unitaires ###
@@ -348,37 +370,47 @@ def test_devoiler_case():
     Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,1)])
     Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
     Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
+    tableau_test.nombre_mines = 2
     
-    # tableau_test.devoiler_case(1,1)
-    # tableau_test.devoiler_case(1,3)
+    #### La ligne 355 ne devrait-elle pas se faire toute seule ? c'est la définition de l'attribut pourquoi dois-je le faire manuellement ?
+    tableau_test.nombre_cases_sans_mine_a_devoiler = tableau_test.dimension_rangee * tableau_test.dimension_colonne - tableau_test.nombre_mines
+    
+    tableau_test.devoiler_case(1,1)
+    tableau_test.devoiler_case(1,3)
     tableau_test.devoiler_case(4,4)
-    # tableau_test.devoiler_case(1,5)
-    # assert tableau_test.dictionnaire_cases[(1,1)].est_devoilee
-    # assert tableau_test.dictionnaire_cases[(1,3)].est_devoilee
+    tableau_test.devoiler_case(1,5)
+    tableau_test.devoiler_case(2,1)
+    tableau_test.devoiler_case(2,2)
+    assert tableau_test.dictionnaire_cases[(1,1)].est_devoilee
+    assert tableau_test.dictionnaire_cases[(1,3)].est_devoilee
     assert tableau_test.dictionnaire_cases[(4,4)].est_devoilee
-    # assert tableau_test.dictionnaire_cases[(1,5)].est_devoilee
+    assert tableau_test.dictionnaire_cases[(1,5)].est_devoilee
+    
+    assert not tableau_test.dictionnaire_cases[(5,1)].est_devoilee
+    
+    assert tableau_test.nombre_cases_sans_mine_a_devoiler == 8
     
     for voisin in tableau_test.obtenir_voisins(4,4):
-         assert tableau_test.dictionnaire_cases[voisin].est_devoilee
+          assert tableau_test.dictionnaire_cases[voisin].est_devoilee
+      
+    for voisin in tableau_test.obtenir_voisins(1,5):
+          assert tableau_test.dictionnaire_cases[voisin].est_devoilee    
         
+    tableau_test1 = Tableau(5,5,0)
+    i, j = 1,1
+    while i <= 5 and j <= 5 :
+        tableau_test1.devoiler_case(i,j)
+        assert tableau_test1.dictionnaire_cases[(i,j)].est_devoilee
+        i += 1
+        j += 1
         
-    #assert not tableau_test.dictionnaire_cases[(5,5)].est_devoilee
-    
-    # tableau_test1 = Tableau(5,5,0)
-    # i, j = 1,1
-    # while i <= 5 and j <= 5 :
-    #     tableau_test1.devoiler_case(i,j)
-    #     assert tableau_test1.dictionnaire_cases[(i,j)].est_devoilee
-    #     i += 1
-    #     j += 1
-        
-    # tableau_test2 = Tableau(5,5,25)
-    # i, j = 1,1
-    # while i <= 5 and j <= 5 :
-    #     tableau_test2.devoiler_case(i,j)
-    #     assert tableau_test2.dictionnaire_cases[(i,j)].est_devoilee
-    #     i += 1
-    #     j += 1
+    tableau_test2 = Tableau(5,5,25)
+    i, j = 1,1
+    while i <= 5 and j <= 5 :
+        tableau_test2.devoiler_case(i,j)
+        assert tableau_test2.dictionnaire_cases[(i,j)].est_devoilee
+        i += 1
+        j += 1
 
 def test_case_contient_mine():
     tableau_test1 = Tableau(5,5,25)
