@@ -275,7 +275,8 @@ class Tableau():
             Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) 
             self.nombre_cases_sans_mine_a_devoiler -= 1
             for voisin in self.obtenir_voisins(rangee_x,colonne_y):
-                Case.devoiler(self.dictionnaire_cases[voisin] 
+
+                Case.devoiler(self.dictionnaire_cases[voisin])
                 self.nombre_cases_sans_mine_a_devoiler -= 1
         
       
