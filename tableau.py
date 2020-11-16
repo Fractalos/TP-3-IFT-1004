@@ -270,21 +270,39 @@ class Tableau():
         Args:
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
-        """             
-        if not self.tableau_mines.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.tableau_mines.dictionnaire_cases[(rangee_x,colonne_y)]):
-            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)]) 
-            self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
-            for voisin in self.tableau_mines.obtenir_voisins(rangee_x,colonne_y):
-                Case.devoiler(self.tableau_mines.dictionnaire_cases[voisin])
-                self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
+        """
+
+        ##TODO modifié par JD pour tester. Pourquoi mettre tableau_mine?
+        if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+            self.nombre_cases_sans_mine_a_devoiler -= 1
+            for voisin in self.obtenir_voisins(rangee_x,colonne_y):
+                Case.devoiler(self.dictionnaire_cases[voisin])
+                self.nombre_cases_sans_mine_a_devoiler -= 1
+
+        elif not self.contient_mine(rangee_x, colonne_y):
+            self.nombre_cases_sans_mine_a_devoiler -= 1
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+
+        else:
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+
+
+
+        #if not self.tableau_mines.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.tableau_mines.dictionnaire_cases[(rangee_x,colonne_y)]):
+        #    Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
+        #    self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
+        #    for voisin in self.tableau_mines.obtenir_voisins(rangee_x,colonne_y):
+        #        Case.devoiler(self.tableau_mines.dictionnaire_cases[voisin])
+        #        self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
         
       
-        elif not self.tableau_mines.contient_mine(rangee_x, colonne_y): 
-            self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1   
-            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
+        #elif not self.tableau_mines.contient_mine(rangee_x, colonne_y):
+        #    self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
+        #   Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
         
-        else:
-            Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
+        #else:
+        #    Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
     
             
     
@@ -321,9 +339,11 @@ class Tableau():
         Returns:
             bool: True si la case à ces coordonnées (x, y) contient une mine, False autrement.
         """
-        
-        return self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
 
+
+        
+        #return self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
+        return self.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
 
 #### Tests unitaires ###
 

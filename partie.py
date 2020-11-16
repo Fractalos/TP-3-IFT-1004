@@ -46,7 +46,7 @@ class Partie():
         nombre_mines = int(input('Entrez le nombre de mines : '))
         self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
 
-        self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines) ##TODO JD J'ai ajouté (dimension_rangee, dimension_colonne, nombre_mines)
+        self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
         
         compteur_tours = 0
         while not self.partie_terminee:
@@ -57,10 +57,12 @@ class Partie():
             
         self.tableau_mines.afficher_solution()
 
-        if self.tableau_mines.contient_case_a_devoiler(): 
-          return 'Défaite!'
-        else :
-          return 'Victoire!' 
+        if self.tableau_mines.contient_cases_a_devoiler():
+          #return 'Défaite!' TODO
+            print("Défaite!")
+        else:
+          #return 'Victoire!' TODO
+            print("Victoire!")
                
     def tour(self):
         """ 
@@ -81,14 +83,14 @@ class Partie():
         coordonnees = self.demander_coordonnees_case_a_devoiler()
 
         # Pour séparer le tuple retourné par demander_coordonnees_case_a_devoiler.
-        tour_x, tour_y = coordonnees[0], coordonnees[1]
-        Tableau.devoiler_case(self, tour_x, tour_y) # On dévoile la case. ##TODO à valider.
-
+        tour_y, tour_x = coordonnees[0], coordonnees[1]
+        #Tableau.devoiler_case(self, tour_x, tour_y) # On dévoile la case. ##TODO à valider.
+        self.tableau_mines.devoiler_case(tour_x, tour_y)
         ### Charlotte : faudrait-il Tableau.tableau_mines.devoiler_case ??
 
 
         # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
-        if Tableau.contient_mine(self, tour_x, tour_y) == True or Tableau.contient_cases_a_devoiler(self) == False:
+        if self.tableau_mines.contient_mine(tour_x, tour_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False:
             self.partie_terminee = True
         
     def valider_coordonnees(self, rangee_x, colonne_y):
