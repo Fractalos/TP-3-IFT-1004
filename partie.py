@@ -139,6 +139,10 @@ class Partie():
             rangee_x = input("Entrez le numéro de ligne : ")
 
             validation = self.valider_coordonnees(rangee_x, colonne_y)
+            
+            if not validation :
+                print()
+                print('Coordonnées invalides. Veuillez recommencer.')
 
         return int(rangee_x), int(colonne_y)
         #TODO J'ai demandé à Pascal implicitement pendant le cours, si on met la virgule, ça retourne un tuple, je ne veux pas m'imposer dans ce que tu as fait, mais j'ai peur d'oublier si ne ne le mets pas tout de suite :-).
