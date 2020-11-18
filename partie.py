@@ -72,15 +72,13 @@ class Partie():
             - On détecte si toutes les cases ont été dévoilées, 
               auquel cas affecte True à l'attribut self.partie_terminee.
         """
-        tour_x = 0 ###Charlotte que faire de ses variables non utilisées ?
-        tour_y = 0
 
         # Demander à l'utilisateur les coordonnées d'une case à dévoiler.
         coordonnees = self.demander_coordonnees_case_a_devoiler()
 
         # Pour séparer le tuple retourné par demander_coordonnees_case_a_devoiler.
         rangee_x, colonne_y = coordonnees[0], coordonnees[1]
-        #Tableau.devoiler_case(self, rangee_x, colonne_y) # On dévoile la case. ##TODO à valider.
+        #Tableau.devoiler_case(self, rangee_x, colonne_y) # On dévoile la case.
         self.tableau_mines.devoiler_case(rangee_x, colonne_y)
 
         # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.

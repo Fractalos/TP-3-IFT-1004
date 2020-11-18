@@ -120,6 +120,7 @@ class Tableau():
         - À chaque fois qu'on ajoute une mine dans une case, on obtient la liste de ses voisins (pour se faire, utilisez la méthode obtenir_voisins)
         - Pour chaque voisin, on appelle la méthode ajouter_une_mine_voisine de la case correspondante.
         """
+        #Pour générer les coordonnées dans le dictionnaire selon les dimensions fournis.
         for rangee_x in range(1, self.dimension_rangee+1):
             for colonne_y in range(1, self.dimension_colonne+1):
                 coordonnees = (rangee_x, colonne_y)
@@ -134,13 +135,14 @@ class Tableau():
             #Pour générer les coordonnées au hasard.
             coordonnees_mine = randint(1, self.dimension_rangee), randint(1, self.dimension_colonne)
             if self.dictionnaire_cases[coordonnees_mine].est_minee == True:
-                pass # Si la case contient déjà une mine on génère on passe pour générer une nouvelle coordonnée.
+                pass # Si la case contient déjà une mine on passe pour analyser une nouvelle coordonnée.
             else:
                 Case.ajouter_mine(self.dictionnaire_cases[coordonnees_mine])
-                # Pour obtenir la liste des cases voisines et incrémenter mine_voisine.
+                # Pour obtenir la liste des cases voisines.
                 liste_voisin = self.obtenir_voisins(coordonnees_mine[0], coordonnees_mine[1])
                 longueur_liste = len(liste_voisin)
                 j = 0
+                #Pour incrémenter mine_voisine.
                 while j <= longueur_liste - 1:
                     Case.ajouter_une_mine_voisine(self.dictionnaire_cases[liste_voisin[j]])
                     j += 1
