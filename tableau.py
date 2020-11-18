@@ -61,8 +61,8 @@ class Tableau():
         Returns:
             bool: True si les coordonnées (x, y) sont valides, False autrement
         """
-        rangee_valide = rangee_x >= 1 and rangee_x <= self.dimension_rangee
-        colonne_valide = colonne_y >= 1 and colonne_y <= self.dimension_colonne
+        rangee_valide = rangee_x >= 1 and rangee_x <= self.dimension_rangee # Vérifie si la case en entrée en argument respecte les dimensions du tableau.
+        colonne_valide = colonne_y >= 1 and colonne_y <= self.dimension_colonne  # Les coordonnées de la case doivent donc appartenir à l'intervale [1, dimension x ou y]
         return rangee_valide and colonne_valide
     
     def obtenir_case(self, rangee_x, colonne_y):
@@ -76,11 +76,11 @@ class Tableau():
             Case: Une référence vers la case obtenue
             (ou None si les coordonnées ne sont pas valides)
         """
-        if not self.valider_coordonnees(rangee_x, colonne_y):
-            return None
+        if not self.valider_coordonnees(rangee_x, colonne_y): # On ne cherche pas à obtenir la case si ses coordonnées sont invalides, i.e. si elles ne respectent pas
+            return None                                       # les dimensions du tableau.  
         
         coordonnees = (rangee_x, colonne_y)
-        return self.dictionnaire_cases[coordonnees]
+        return self.dictionnaire_cases[coordonnees] # On accède aux valeurs du dictionnaire de cases
 
     def obtenir_voisins(self, rangee_x, colonne_y):
         """
