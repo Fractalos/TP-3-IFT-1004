@@ -1,0 +1,5 @@
+
+*.pyc
+__pycache__/case.cpython-38.pyc
+__pycache__/partie.cpython-38.pyc
+__pycache__/tableau.cpython-38.pyc
