@@ -95,19 +95,19 @@ class Tableau():
             list : Liste des coordonnées (tuple x, y) valides des cases voisines de la case dont les coordonnées
             sont reçues en argument
         """
-        voisinage = ((-1, -1), (-1, 0), (-1, 1),
+        voisinage = ((-1, -1), (-1, 0), (-1, 1), # Permet de génèrer le voisinage de la case reçue en argument.
                      (0, -1),           (0, 1),
                      (1, -1),  (1, 0),  (1, 1))
 
         liste_coordonnees_cases_voisines = []
         case = (rangee_x, colonne_y) 
 
-        for voisin in voisinage :                               # Pour toutes les cases voisines, on additionne la coordonnée en x (respectivement y)
-            x, y  = case[0] + voisin[0], case[1] + voisin[1]    # de la case avec celle en x (respectivement y) de son voisin.
+        for voisin in voisinage :                               # Pour toutes les cases du voisinage, on additionne la coordonnée en x (respectivement y)
+            x, y  = case[0] + voisin[0], case[1] + voisin[1]    # de la case dont on cherche les voisins avec celle en x (respectivement y) des cases du voisinage. 
                                                                 
-            if self.valider_coordonnees(x,y):                   # On vérifie si la case voisine est dans le tableau, i.e. respecte ses dimensions.
-                liste_coordonnees_cases_voisines.append((x,y))   
-
+            if self.valider_coordonnees(x,y):                   # On vérifie si la case voisine obtenue est dans le tableau, autrement dit si les dimensions sont respectées.
+                liste_coordonnees_cases_voisines.append((x,y))  # Pour ce faire, on utilise valider_coordonnees. Si les conditions sont respectées, on ajoute la case voisine
+                                                                # dans la liste des cases voisines. 
         return liste_coordonnees_cases_voisines    
 
     def initialiser_tableau(self):
@@ -160,7 +160,8 @@ class Tableau():
                   case a déjà été dévoilée ou que les coordonnées ne dont pas valides).
         """          
         return self.valider_coordonnees(rangee_x, colonne_y) and not self.dictionnaire_cases[(rangee_x, colonne_y)].est_devoilee
-        
+               # Valide les dimensions                               # Valide que la case n'est pas dévoilée
+    
     def afficher_solution(self):
         """
         Méthode qui affiche le tableau de la solution à l'écran. La solution montre les 
@@ -195,7 +196,7 @@ class Tableau():
                     else:
                         car = str(case_xy.nombre_mines_voisines)
                 
-                # Afficher le caractère suivit d'un espace (sans retour de ligne)
+                # Afficher le caractère suivi d'un espace (sans retour de ligne)
                 print(car, end=" ")
             
             # À la fin de chaque ligne
@@ -256,8 +257,8 @@ class Tableau():
 
         """
         cases_a_devoiler = False
-        for case in self.dictionnaire_cases.values() :
-            if not case.est_devoilee:
+        for case in self.dictionnaire_cases.values() : # On parcourt le dictionnaire de cases afin de repérer les
+            if not case.est_devoilee:                  # cases dévoilées.
                 cases_a_devoiler = True
         return cases_a_devoiler
 
@@ -271,63 +272,23 @@ class Tableau():
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
         """
-
-        ##TODO modifié par JD pour tester. Pourquoi mettre tableau_mine?
+        # Si la case ne contient pas de mine et que ses voisins de sont pas minés.
         if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) # On dévoile la case.
             self.nombre_cases_sans_mine_a_devoiler -= 1
-            for voisin in self.obtenir_voisins(rangee_x,colonne_y):
+            for voisin in self.obtenir_voisins(rangee_x,colonne_y): # on dévoile les voisins en allant les récupérer avec obtenir_voisins.
                 Case.devoiler(self.dictionnaire_cases[voisin])
-                self.nombre_cases_sans_mine_a_devoiler -= 1
+                self.nombre_cases_sans_mine_a_devoiler -= 1 # On décrémente l'attribut qui représente le nombre de cases sans mine à dévoiler. 
 
+        # Si la case ne contient pas de mines, mais a des voisins minés.
         elif not self.contient_mine(rangee_x, colonne_y):
-            self.nombre_cases_sans_mine_a_devoiler -= 1
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
+            self.nombre_cases_sans_mine_a_devoiler -= 1 # On décrémente l'attribut qui représente le nombre de cases sans mine à dévoiler. 
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) # On dévoile la case.
 
+        # Si la case est minée.
         else:
-            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
-
-
-
-        #if not self.tableau_mines.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.tableau_mines.dictionnaire_cases[(rangee_x,colonne_y)]):
-        #    Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
-        #    self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
-        #    for voisin in self.tableau_mines.obtenir_voisins(rangee_x,colonne_y):
-        #        Case.devoiler(self.tableau_mines.dictionnaire_cases[voisin])
-        #        self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
-        
-      
-        #elif not self.tableau_mines.contient_mine(rangee_x, colonne_y):
-        #    self.tableau_mines.nombre_cases_sans_mine_a_devoiler -= 1
-        #   Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
-        
-        #else:
-        #    Case.devoiler(self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)])
-    
-            
-    
-    # J'ai l'impression que je dois mettre tableau_mines ici finalement 
-    
-    
-    
-    
-    # if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
-    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) 
-    #         self.nombre_cases_sans_mine_a_devoiler -= 1
-    #         for voisin in self.obtenir_voisins(rangee_x,colonne_y):
-
-    #             Case.devoiler(self.dictionnaire_cases[voisin])
-    #             self.nombre_cases_sans_mine_a_devoiler -= 1
-        
-      
-    #     elif not self.contient_mine(rangee_x, colonne_y): 
-    #         self.nombre_cases_sans_mine_a_devoiler -= 1   
-    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])
-        
-    #     else:
-    #         Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)])    
-    
-    
+            Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) # On dévoile la case.
+     
     def contient_mine(self, rangee_x, colonne_y):
         """
         Méthode qui vérifie si la case dont les coordonnées sont reçues en argument contient une mine.
@@ -339,13 +300,9 @@ class Tableau():
         Returns:
             bool: True si la case à ces coordonnées (x, y) contient une mine, False autrement.
         """
+        return self.dictionnaire_cases[(rangee_x, colonne_y)].est_minee # Retourne la valeur booléenne de l'attribut est_minee
 
-
-        
-        #return self.tableau_mines.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
-        return self.dictionnaire_cases[(rangee_x, colonne_y)].est_minee
-
-#### Tests unitaires ###
+#### Tests unitaires ####
 
 def test_initialisation():
     tableau_test = Tableau(5,5,5)
@@ -391,8 +348,6 @@ def test_devoiler_case():
     Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
     Case.ajouter_une_mine_voisine(tableau_test.dictionnaire_cases[(2,2)])
     tableau_test.nombre_mines = 2
-    
-    #### La ligne 355 ne devrait-elle pas se faire toute seule ? c'est la définition de l'attribut pourquoi dois-je le faire manuellement ?
     tableau_test.nombre_cases_sans_mine_a_devoiler = tableau_test.dimension_rangee * tableau_test.dimension_colonne - tableau_test.nombre_mines
     
     tableau_test.devoiler_case(1,1)

@@ -37,32 +37,26 @@ class Partie():
         Tant que la partie n'est pas terminée, on joue un tour de la partie. 
         Une fois la partie terminée, on affiche le tableau de cases complètement dévoilé
         et on indique un message sur l'issue de la partie (victoire ou défaite).
-        """
-        # Le bout de code ci-dessous sera testé après avoir testé les dimensions par défaut.
-        
+        """        
         print('*** Options du jeu ***')
         dimension_rangee = int(input('Entrez le nombre de lignes : '))
         dimension_colonne = int(input('Entrez le nombre de colonnes : '))
         nombre_mines = int(input('Entrez le nombre de mines : '))
         self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
-
-        self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
         
         compteur_tours = 0
-        while not self.partie_terminee:
-            compteur_tours +=1
+        while not self.partie_terminee: # Tant qu'une mine n'a pas été actionnée ou qu'il reste des cases à dévoiler
+            compteur_tours +=1          # on continue la partie et on incrémente le compteur de tours.
             print(f'\n===> Tour #{compteur_tours} <===')
-            self.tableau_mines.afficher_tableau()
+            self.tableau_mines.afficher_tableau() # On affiche le tableau « mis à jour ».
             self.tour()
             
-        self.tableau_mines.afficher_solution()
+        self.tableau_mines.afficher_solution() # Si la partie est terminée, on affiche le tableau solution.
 
-        if self.tableau_mines.contient_cases_a_devoiler():
-          #return 'Défaite!' TODO
-            print()
-            print("Défaite!")
+        if self.tableau_mines.contient_cases_a_devoiler(): # On affiche l'issue de la partie 
+            print()                                        # selon qu'il reste ou non des cases
+            print("Défaite!")                              # à dévoiler.
         else:
-          #return 'Victoire!' TODO
             print()
             print("Victoire!")
                
@@ -78,7 +72,7 @@ class Partie():
             - On détecte si toutes les cases ont été dévoilées, 
               auquel cas affecte True à l'attribut self.partie_terminee.
         """
-        tour_x = 0
+        tour_x = 0 ###Charlotte que faire de ses variables non utilisées ?
         tour_y = 0
 
         # Demander à l'utilisateur les coordonnées d'une case à dévoiler.
@@ -88,8 +82,6 @@ class Partie():
         rangee_x, colonne_y = coordonnees[0], coordonnees[1]
         #Tableau.devoiler_case(self, rangee_x, colonne_y) # On dévoile la case. ##TODO à valider.
         self.tableau_mines.devoiler_case(rangee_x, colonne_y)
-        ### Charlotte : faudrait-il Tableau.tableau_mines.devoiler_case ??
-
 
         # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
         if self.tableau_mines.contient_mine(rangee_x, colonne_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False:
@@ -112,11 +104,11 @@ class Partie():
             bool : True si les coordonnées sont valides, False autrement.
         """
 
-        if rangee_x.isnumeric() and colonne_y.isnumeric():
+        if rangee_x.isnumeric() and colonne_y.isnumeric(): #1) Vérifie si les coordonnées sont des caractères numériques.
             rangee_x, colonne_y = int(rangee_x), int(colonne_y)
-            return self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y)
-        else :
-            return False
+            return self.tableau_mines.valider_coordonnees_a_devoiler(rangee_x, colonne_y) # 2) et 3) Vérifier si les coordonnées respectent 
+        else :                                                                            # les dimensions du tableau et ne sont pas dévoilées
+            return False                                                                  # avec la méthode valider_coordonnees_a_devoiler.
     
     def demander_coordonnees_case_a_devoiler(self):
         """
@@ -145,24 +137,3 @@ class Partie():
                 print('Coordonnées invalides. Veuillez recommencer.')
 
         return int(rangee_x), int(colonne_y)
-        #TODO J'ai demandé à Pascal implicitement pendant le cours, si on met la virgule, ça retourne un tuple, je ne veux pas m'imposer dans ce que tu as fait, mais j'ai peur d'oublier si ne ne le mets pas tout de suite :-).
-        # J'ai rajouté des int() parce que ça m'empêchait d'y voir clair pour une autre méthode :-).
-
-def test_tour():
-    
-    test_partie = Partie()
-    assert not test_partie.tour()
-
-def test_demander_coordonnees_case_a_devoiler():
-
-    test_partie = Partie()
-    test_partie.tableau_mines = Tableau()
-    assert test_partie.demander_coordonnees_case_a_devoiler()
-
-
-if __name__ == '__main__':
-
-    print('Tests unitaires...')
-    test_demander_coordonnees_case_a_devoiler()
-    test_tour()
-    print('Tests réussis!')
