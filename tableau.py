@@ -274,13 +274,14 @@ class Tableau():
             rangee_x (int) : Numéro de la rangée de la case à dévoiler
             colonne_y (int): Numéro de la colonne de la case à dévoiler
         """
-        # Si la case ne contient pas de mine et que ses voisins de sont pas minés.
+        # Si la case ne contient pas de mine et que ses voisins ne sont pas minés.
         if not self.contient_mine(rangee_x, colonne_y) and not Case.est_voisine_d_une_mine(self.dictionnaire_cases[(rangee_x,colonne_y)]):
             Case.devoiler(self.dictionnaire_cases[(rangee_x, colonne_y)]) # On dévoile la case.
             self.nombre_cases_sans_mine_a_devoiler -= 1
             for voisin in self.obtenir_voisins(rangee_x,colonne_y): # on dévoile les voisins en allant les récupérer avec obtenir_voisins.
-                Case.devoiler(self.dictionnaire_cases[voisin])
-                self.nombre_cases_sans_mine_a_devoiler -= 1 # On décrémente l'attribut qui représente le nombre de cases sans mine à dévoiler. 
+                if (self.dictionnaire_cases[(rangee_x, colonne_y)]).est_devoilee == True: #TODO
+                    Case.devoiler(self.dictionnaire_cases[voisin])
+                    self.nombre_cases_sans_mine_a_devoiler -= 1 # On décrémente l'attribut qui représente le nombre de cases sans mine à dévoiler.
 
         # Si la case ne contient pas de mines, mais a des voisins minés.
         elif not self.contient_mine(rangee_x, colonne_y):

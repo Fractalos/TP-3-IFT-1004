@@ -53,7 +53,7 @@ class Partie():
             
         self.tableau_mines.afficher_solution() # Si la partie est terminée, on affiche le tableau solution.
 
-        if self.tableau_mines.contient_cases_a_devoiler(): # On affiche l'issue de la partie 
+        if self.tableau_mines.contient_cases_a_devoiler() and self.tableau_mines.nombre_cases_sans_mine_a_devoiler > 0: # On affiche l'issue de la partie ##TODO
             print()                                        # selon qu'il reste ou non des cases
             print("Défaite!")                              # à dévoiler.
         else:
@@ -82,9 +82,9 @@ class Partie():
         self.tableau_mines.devoiler_case(rangee_x, colonne_y)
 
         # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
-        if self.tableau_mines.contient_mine(rangee_x, colonne_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False:
+        if self.tableau_mines.contient_mine(rangee_x, colonne_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False or self.tableau_mines.nombre_cases_sans_mine_a_devoiler == 0:#TODO changer -2 devrait être 0
             self.partie_terminee = True
-        
+
     def valider_coordonnees(self, rangee_x, colonne_y):
         """
         Méthode qui valide les coordonnées reçues en paramètres.
