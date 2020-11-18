@@ -53,9 +53,10 @@ class Partie():
             
         self.tableau_mines.afficher_solution() # Si la partie est terminée, on affiche le tableau solution.
 
-        if self.tableau_mines.contient_cases_a_devoiler() and self.tableau_mines.nombre_cases_sans_mine_a_devoiler > 0: # On affiche l'issue de la partie ##TODO
-            print()                                        # selon qu'il reste ou non des cases
-            print("Défaite!")                              # à dévoiler.
+        # On affiche l'issue de la partie selon qu'il reste ou non des cases à dévoiler.
+        if self.tableau_mines.contient_cases_a_devoiler() and self.tableau_mines.nombre_cases_sans_mine_a_devoiler > 0:
+            print()
+            print("Défaite!")
         else:
             print()
             print("Victoire!")
@@ -81,8 +82,8 @@ class Partie():
         #Tableau.devoiler_case(self, rangee_x, colonne_y) # On dévoile la case.
         self.tableau_mines.devoiler_case(rangee_x, colonne_y)
 
-        # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler.
-        if self.tableau_mines.contient_mine(rangee_x, colonne_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False or self.tableau_mines.nombre_cases_sans_mine_a_devoiler == 0:#TODO changer -2 devrait être 0
+        # On détecte si une mine a été actionnée ou s'il reste des cases à dévoiler ou s'il reste des cases à dévoiler qui sont seulement des mines.
+        if self.tableau_mines.contient_mine(rangee_x, colonne_y) == True or self.tableau_mines.contient_cases_a_devoiler() == False or self.tableau_mines.nombre_cases_sans_mine_a_devoiler == 0:
             self.partie_terminee = True
 
     def valider_coordonnees(self, rangee_x, colonne_y):
