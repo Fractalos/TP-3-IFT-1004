@@ -39,9 +39,43 @@ class Partie():
         et on indique un message sur l'issue de la partie (victoire ou défaite).
         """        
         print('*** Options du jeu ***')
-        dimension_rangee = int(input('Entrez le nombre de lignes : '))
-        dimension_colonne = int(input('Entrez le nombre de colonnes : '))
-        nombre_mines = int(input('Entrez le nombre de mines : '))
+        
+        validation = False
+        while not validation :
+            
+            dimension_rangee = input('Entrez le nombre de lignes : ')
+            dimension_colonne = input('Entrez le nombre de colonnes : ')
+            nombre_mines = input('Entrez le nombre de mines : ')
+            
+            if dimension_rangee.isnumeric() and dimension_colonne.isnumeric() and nombre_mines.isnumeric():
+                dimension_rangee = int(dimension_rangee)
+                dimension_colonne = int(dimension_colonne)
+                nombre_mines = int(nombre_mines)
+                
+                validation = nombre_mines < dimension_rangee*dimension_colonne
+            
+                if not validation :
+                    print()
+                    print(20*'-')
+                    print('Nombre de mines invalide. Veuillez entrer un nombre de mines inférieur au nombre total de cases du tableau.')
+                    print(20*'-')
+            # if dimenion_rangee.isnumeric() and dimension_colonne.isnumeric():
+            #     dimension_rangee = int(input('Entrez le nombre de lignes : '))
+            #     dimension_colonne = int(input('Entrez le nombre de colonnes : '))
+            #     nombre_mines = int(input('Entrez le nombre de mines : '))
+
+            #     validation = nombre_mines < dimension_rangee*dimension_colonne
+            
+            #     if not validation :
+            #         print()
+            #         print('Nombre de mines invalide. Veuillez entrer un nombre de mines inférieur au nombre total de cases du tableau.')
+            
+            else:
+                print()
+                print(20*'-')
+                print('Coordonnées invalides. Veuillez entrer des nombres entiers.')
+                print(20*'-') 
+            
         self.tableau_mines = Tableau(dimension_rangee, dimension_colonne, nombre_mines)
         
         compteur_tours = 0
@@ -133,6 +167,8 @@ class Partie():
             
             if not validation :
                 print()
-                print('Coordonnées invalides. Veuillez recommencer.')
-
+                print(20*'-')
+                print('Coordonnées invalides. Veuillez recommencer. \n\nVeillez à respecter les dimensions du tableau et à entrer les coordonnées d\'une case qui ne soit pas déjà dévoilée. ')
+                print(20*'-')
+                
         return int(rangee_x), int(colonne_y)

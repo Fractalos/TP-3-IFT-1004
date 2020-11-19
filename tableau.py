@@ -359,14 +359,15 @@ def test_devoiler_case():
     tableau_test.devoiler_case(1,5)
     tableau_test.devoiler_case(2,1)
     tableau_test.devoiler_case(2,2)
+    tableau_test.devoiler_case(4,2)
     assert tableau_test.dictionnaire_cases[(1,1)].est_devoilee
     assert tableau_test.dictionnaire_cases[(1,3)].est_devoilee
     assert tableau_test.dictionnaire_cases[(4,4)].est_devoilee
     assert tableau_test.dictionnaire_cases[(1,5)].est_devoilee
     
-    assert not tableau_test.dictionnaire_cases[(5,1)].est_devoilee
+    assert not tableau_test.dictionnaire_cases[(1,2)].est_devoilee
     
-    assert tableau_test.nombre_cases_sans_mine_a_devoiler == 8
+    assert (tableau_test.nombre_cases_sans_mine_a_devoiler == 2)
     
     for voisin in tableau_test.obtenir_voisins(4,4):
           assert tableau_test.dictionnaire_cases[voisin].est_devoilee
