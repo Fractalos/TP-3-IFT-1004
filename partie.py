@@ -53,12 +53,19 @@ class Partie():
                 nombre_mines = int(nombre_mines)
                 
                 validation = nombre_mines < dimension_rangee*dimension_colonne and nombre_mines > 0
-            
-                if not validation :
+                
+                if dimension_rangee == 0 or dimension_colonne == 0:
                     print()
                     print(20*'-')
-                    print('Nombre de mines invalide. \n\nVeuillez entrer un nombre de mines inférieur au nombre total de cases du tableau. \n\nDe plus, le nombre de mines ne peut être nul ! ')
+                    print('Dimensions du tableau invalides. \n\nVeuillez entrer des dimensions strictement positives. ')
                     print(20*'-')
+            
+                else :
+                    if not validation :
+                        print()
+                        print(20*'-')
+                        print('Nombre de mines invalide. \n\nVeuillez entrer un nombre de mines inférieur au nombre total de cases du tableau. \n\nDe plus, le nombre de mines ne peut être nul ! ')
+                        print(20*'-')
             
             else:
                 print()
